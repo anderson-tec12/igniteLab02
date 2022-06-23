@@ -1,5 +1,49 @@
-export function Lesson(){
+import { CheckCircle, Lock } from "phosphor-react";
+import { isPast, format } from "date-fns";
+import ptBR from "date-fns/locale/pt";
+
+interface IPROPS {
+  title: string;
+  slug: string;
+  availableAt: Date;
+  type: "live" | "class";
+}
+
+export function Lesson({ availableAt, slug, type, title }: IPROPS) {
+  const isLessonAvailable = isPast(availableAt);
+  const availableDateFormatted = format(
+    availableAt,
+    "EEEE' • 'd' de 'MMMM' • 'k'h'",
+    {
+      locale: ptBR,
+    }
+  );
+
   return (
-    <div></div>
-  )
+    <a href="#">
+      <span className="text-gray-300">{availableDateFormatted}</span>
+
+      <div className="rounded border border-gray-500 p-4 mt-2">
+        <header className="flex items-center justify-between">
+          {isLessonAvailable ? (
+            <span className="text-sm font-medium text-blue-500 flex items center gap-2">
+              <CheckCircle size={20} />
+              Conteúdo liberado
+            </span>
+          ) : (
+            <span className="text-sm font-medium text-orange-500 flex items center gap-2">
+              <Lock size={20} />
+              Em Breve
+            </span>
+          )}
+
+          <span className="text-xs rounded px-2 py-[2px] text-white border  border-green-300 font-bold">
+            {type === "live" ? "AO VIVO" : "AULA PRATICA"}
+          </span>
+        </header>
+
+        <strong className="text-gray-200 mt-5 block">{title}</strong>
+      </div>
+    </a>
+  );
 }
