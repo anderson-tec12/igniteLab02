@@ -31,6 +31,9 @@ module.exports = {
           900: "#09090A",
         },
       },
+      backgroundImage: {
+        blur: "url(/src/Assets/blur-background.png)",
+      },
     },
   },
   plugins: [],
